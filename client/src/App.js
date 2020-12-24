@@ -1,8 +1,8 @@
+// App.js used for routing components
 import React, { useEffect, lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
@@ -48,6 +48,7 @@ const SideDrawer = lazy(() => import("./components/drawer/SideDrawer"));
 const RegisterComplete = lazy(() => import("./pages/auth/RegisterComplete"));
 const ForgotPassword = lazy(() => import("./pages/auth/ForgotPassword"));
 const History = lazy(() => import("./pages/user/History"));
+// userRoute is used to
 const UserRoute = lazy(() => import("./components/routes/UserRoute"));
 const AdminRoute = lazy(() => import("./components/routes/AdminRoute"));
 const Password = lazy(() => import("./pages/user/Password"));
@@ -87,6 +88,7 @@ const App = () => {
 
         currentUser(idTokenResult.token)
           .then((res) => {
+            //dispatch seems to access the reducers sending the data inside the function and executing the reducer function
             dispatch({
               type: "LOGGED_IN_USER",
               payload: {
@@ -118,7 +120,7 @@ const App = () => {
       <Header />
       <SideDrawer />
       <ToastContainer />
-      <Switch>
+      <Switch> // for routing each page
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />

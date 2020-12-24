@@ -10,8 +10,8 @@ const ForgotPassword = ({ history }) => {
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
-    if (user && user.token) history.push("/");
-  }, [user, history]);
+    if (user && user.token) history.push("/"); // if user and user.token have values then redirect to /
+  }, [user, history]); // any time history and user have values then user gets redirected
 
   const handleSubmit = async (e) => {
     e.preventDefault();

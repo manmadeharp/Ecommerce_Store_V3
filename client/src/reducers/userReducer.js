@@ -8,3 +8,4 @@ export const userReducer = (state = null, action) => {
       return state;
   }
 };
+// changes the global variable action.payload based on if action.type is logged_in_user or logout

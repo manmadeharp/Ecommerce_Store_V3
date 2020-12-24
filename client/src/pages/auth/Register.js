@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
 const Register = ({ history }) => {
+  //  usestate is used to create a local variable learn more about it in the docks
   const [email, setEmail] = useState("");
 
   const { user } = useSelector((state) => ({ ...state }));
@@ -12,14 +13,16 @@ const Register = ({ history }) => {
     if (user && user.token) history.push("/");
   }, [user, history]);
 
+  //this code below is used when the user has completed their form by clicking the button,
+    // it redirects the user to register/complete
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // preventDefault ->
     console.log("ENV --->", process.env.REACT_APP_REGISTER_REDIRECT_URL);
     const config = {
       url: process.env.REACT_APP_REGISTER_REDIRECT_URL,
       handleCodeInApp: true,
     };
-
+    //firebase register email sender, uses toastify to notify user that a message has been sent to there email
     await auth.sendSignInLinkToEmail(email, config);
     toast.success(
       `Email is sent to ${email}. Click the link to complete your registration.`
@@ -36,6 +39,7 @@ const Register = ({ history }) => {
         type="email"
         className="form-control"
         value={email}
+        /*on change e becomes the string value in the input box*/
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Your email"
         autoFocus

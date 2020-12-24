@@ -11,7 +11,7 @@ import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./reducers";
 
-// store
+// store // Reducer is a function that updates the state of a variable
 const store = createStore(rootReducer, composeWithDevTools());
 
 ReactDOM.render(

@@ -23,9 +23,9 @@ const Login = ({ history }) => {
     }
   }, [user, history]);
 
-  let dispatch = useDispatch();
+  let dispatch = useDispatch(); // dispatch used to dispatch data to update the redux state
 
-  const roleBasedRedirect = (res) => {
+  const roleBasedRedirect = (res) => { // used to redirect user to homepage once a process like password reset or signin is done
     // check if intended
     let intended = history.location.state;
     if (intended) {

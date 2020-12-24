@@ -3,7 +3,7 @@ import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { createOrUpdateUser } from "../../functions/auth";
-
+//history is used to redirect user when they complete registration
 const RegisterComplete = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +16,7 @@ const RegisterComplete = ({ history }) => {
     // console.log(window.location.href);
     // console.log(window.localStorage.getItem("emailForRegistration"));
   }, [history]);
+  // ^ [] is the dependency, whenever this changes the useEffect will run
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,22 +32,25 @@ const RegisterComplete = ({ history }) => {
     }
 
     try {
+      // result contains firebase data, signinwithemail link allows the user to sign in with the email
+      // and link sent to there email this allows them to sign in without a password, but we will allow them to
+      // set there password here
       const result = await auth.signInWithEmailLink(
         email,
         window.location.href
       );
-      //   console.log("RESULT", result);
-      if (result.user.emailVerified) {
+        // console.log("RESULT", result);
+      if (result.user.emailVerified) { // we update the user with there password here
         // remove user email fom local storage
         window.localStorage.removeItem("emailForRegistration");
         // get user id token
         let user = auth.currentUser;
         await user.updatePassword(password);
-        const idTokenResult = await user.getIdTokenResult();
+        const idTokenResult = await user.getIdTokenResult(); // this is where we get the currently logged in users token
         // redux store
-        console.log("user", user, "idTokenResult", idTokenResult);
+        // console.log("user", user, "idTokenResult", idTokenResult);
 
-        createOrUpdateUser(idTokenResult.token)
+        createOrUpdateUser(idTokenResult.token)// this is where we actually create/update the user
           .then((res) => {
             dispatch({
               type: "LOGGED_IN_USER",
@@ -54,7 +58,7 @@ const RegisterComplete = ({ history }) => {
                 name: res.data.name,
                 email: res.data.email,
                 token: idTokenResult.token,
-                role: res.data.role,
+                role: res.data.role, // this is the role of the user that can be changed from user to admin in firebase console
                 _id: res.data._id,
               },
             });
@@ -62,7 +66,8 @@ const RegisterComplete = ({ history }) => {
           .catch((err) => console.log(err));
 
         // redirect
-        history.push("/");
+        history.push("/"); // when this is executed the useEffect is executed as well because it is dependent on history
+
       }
     } catch (error) {
       console.log(error);

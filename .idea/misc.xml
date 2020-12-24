@@ -17,4 +17,10 @@
       </map>
     </option>
   </component>
+  <component name="ReactNativePackager" nodePath="project" workingDirectory="$PROJECT_DIR$">
+    <scripts>
+      <item value="npm" />
+      <item value="start" />
+    </scripts>
+  </component>
 </project>
