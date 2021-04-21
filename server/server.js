@@ -8,10 +8,10 @@ require("dotenv").config();
 
 // app
 const app = express();
-
+console.log(process.env.DATABASE);
 // db
 mongoose
-  .connect(process.env.DATABASE, {
+  .connect( 'mongodb+srv://finbar123:Mushroom1!@cluster0.yk0az.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
